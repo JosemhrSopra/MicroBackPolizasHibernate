@@ -1,10 +1,5 @@
-FROM maven:3-jdk-8-alpine
+FROM openjdk:8-jdk-alpine
+COPY target/*.jar app/
+EXPOSE 1111
+ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","app.jar"]
 
-WORKDIR /usr/src/app
-
-COPY . /usr/src/app
-RUN mvn package
-
-ENV PORT 1111
-EXPOSE $PORT
-CMD [ "sh", "-c", "mvn -Dserver.port=${PORT} spring-boot:run" ]
